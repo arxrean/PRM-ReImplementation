@@ -77,12 +77,18 @@ def train(args):
     loss_func = torch.nn.MultiLabelSoftMarginLoss()
 
     for epoch in range(args.max_epoches):
+        opt=get_finetune_optimizer(args, model, epoch)
+        
         for iter, pack in enumerate(train_loader):
             imgs = pack[1].cuda()
             labels = pack[2].cuda()
 
             aggregation = model.forward(imgs)
             loss=loss_func(aggregation,labels)
+
+            opt.zero_grad()
+            loss.backward()
+            opt.step()
 
 
 if __name__ == '__main__':
