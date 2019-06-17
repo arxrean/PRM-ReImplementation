@@ -1,6 +1,7 @@
 import argparse
 from torch.utils.data import Dataset, DataLoader
 from torchvision import datasets, transforms
+import torch.optim as optim
 import torch.nn as nn
 import torch
 
@@ -77,14 +78,14 @@ def train(args):
     loss_func = torch.nn.MultiLabelSoftMarginLoss()
 
     for epoch in range(args.max_epoches):
-        opt=get_finetune_optimizer(args, model, epoch)
-        
+        opt = get_finetune_optimizer(args, model, epoch)
+
         for iter, pack in enumerate(train_loader):
             imgs = pack[1].cuda()
             labels = pack[2].cuda()
 
             aggregation = model.forward(imgs)
-            loss=loss_func(aggregation,labels)
+            loss = loss_func(aggregation, labels)
 
             opt.zero_grad()
             loss.backward()
