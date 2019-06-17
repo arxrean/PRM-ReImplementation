@@ -6,6 +6,7 @@ import torch.nn as nn
 import torch
 import torch.nn.functional as F
 from torch import Tensor
+from typing import Optional
 
 from loader.dataset import pascal_voc_classification
 from model.peak_net import peak_response_mapping
