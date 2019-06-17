@@ -99,8 +99,8 @@ def train(args):
 
     model = peak_response_mapping(
         backbone=fc_resnet50(), sub_pixel_locating_factor=8)
-    # model = nn.DataParallel(model).cuda()
-    model = model.cuda()
+    model = nn.DataParallel(model).cuda()
+    # model = model.cuda()
 
     for epoch in range(args.max_epoches):
         opt = get_finetune_optimizer(args, model, epoch)
