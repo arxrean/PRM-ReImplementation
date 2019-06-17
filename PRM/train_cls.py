@@ -73,7 +73,8 @@ def train(args):
 
     model = peak_response_mapping(
         backbone=fc_resnet50(), sub_pixel_locating_factor=8)
-    model = nn.DataParallel(model).cuda()
+    # model = nn.DataParallel(model).cuda()
+    model=model.cuda()
 
     loss_func = torch.nn.MultiLabelSoftMarginLoss()
 
