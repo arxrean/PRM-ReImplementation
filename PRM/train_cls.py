@@ -91,7 +91,10 @@ def train(args):
             loss.backward()
             opt.step()
 
-            
+            if iter % 50 == 0:
+                print('epoch:{} iter:{} loss:{}'.format(epoch, iter, loss))
+
+    torch.save(model.module.state_dict(), args.save_weights)
 
 
 if __name__ == '__main__':
