@@ -2,6 +2,7 @@ import argparse
 from torch.utils.data import Dataset, DataLoader
 from torchvision import datasets, transforms
 import torch.nn as nn
+import torch
 
 from loader.dataset import pascal_voc_classification
 from model.peak_net import peak_response_mapping
@@ -73,13 +74,15 @@ def train(args):
         backbone=fc_resnet50(), sub_pixel_locating_factor=8)
     model = model.cuda()
 
-    for epoch in range(args.max_epoches):
-	    for iter, pack in enumerate(train_loader):
-	        imgs = pack[1].cuda()
-	        labels = pack[2].cuda()
+    loss_func = torch.nn.MultiLabelSoftMarginLoss()
 
-	        aggregation = model.forward(imgs)
-	        pass
+    for epoch in range(args.max_epoches):
+        for iter, pack in enumerate(train_loader):
+            imgs = pack[1].cuda()
+            labels = pack[2].cuda()
+
+            aggregation = model.forward(imgs)
+            loss=loss_func(aggregation,labels)
 
 
 if __name__ == '__main__':
