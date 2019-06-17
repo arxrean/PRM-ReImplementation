@@ -4,6 +4,8 @@ from torchvision import datasets, transforms
 import torch.optim as optim
 import torch.nn as nn
 import torch
+import torch.nn.functional as F
+from torch import Tensor
 
 from loader.dataset import pascal_voc_classification
 from model.peak_net import peak_response_mapping
@@ -58,6 +60,29 @@ def get_finetune_optimizer(args, model, epoch):
     return opt
 
 
+def multilabel_soft_margin_loss(
+        input: Tensor,
+        target: Tensor,
+        weight: Optional[Tensor] = None,
+        size_average: bool = True,
+        reduce: bool = True,
+        difficult_samples: bool = False) -> Tensor:
+    """Multilabel soft margin loss.
+    """
+
+    if difficult_samples:
+        # label 1: positive samples
+        # label 0: difficult samples
+        # label -1: negative samples
+        gt_label = target.clone()
+        gt_label[gt_label == 0] = 1
+        gt_label[gt_label == -1] = 0
+    else:
+        gt_label = target
+
+    return F.multilabel_soft_margin_loss(input, gt_label, weight, size_average, reduce)
+
+
 def train(args):
     train_transform = transforms.Compose([
         transforms.Resize((448, 448)),
@@ -74,9 +99,7 @@ def train(args):
     model = peak_response_mapping(
         backbone=fc_resnet50(), sub_pixel_locating_factor=8)
     # model = nn.DataParallel(model).cuda()
-    model=model.cuda()
-
-    loss_func = torch.nn.MultiLabelSoftMarginLoss()
+    model = model.cuda()
 
     for epoch in range(args.max_epoches):
         opt = get_finetune_optimizer(args, model, epoch)
@@ -86,7 +109,8 @@ def train(args):
             labels = pack[2].cuda()
 
             aggregation = model.forward(imgs)
-            loss = loss_func(aggregation, labels)
+            loss = multilabel_soft_margin_loss(
+                input=aggregation, target=labels, difficult_samples=True)
 
             opt.zero_grad()
             loss.backward()
