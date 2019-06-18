@@ -60,10 +60,10 @@ if __name__ == '__main__':
 	backbone = modules.fc_resnet50(num_classes=20, pretrained=False)
 	model = modules.peak_response_mapping(backbone)
 
-	state = torch.load('./snapshots/model_latest.pt')
-	new_dict=dict()
-	for k,v in state['model'].items():
-		new_dict[k[7:]]=v
+	state = torch.load('./save/weights/peak_cls_train.pt')
+	# new_dict=dict()
+	# for k,v in state['model'].items():
+	# 	new_dict[k[7:]]=v
 	model.load_state_dict(new_dict)
 	model=model.cuda()
 
