@@ -54,10 +54,10 @@ def get_finetune_optimizer(args, model, epoch):
             elif 'bias' in name:
                 bias_list.append(value)
 
-    opt = optim.SGD([{'params': weight_list, 'lr': lr},
-                     {'params': bias_list, 'lr': lr},
-                     {'params': last_weight_list, 'lr': lr, 'weight_decay': 1e-4},
-                     {'params': last_bias_list, 'lr': lr, 'weight_decay': 1e-4}], momentum=0.9)
+    opt = optim.SGD([{'params': weight_list, 'lr': lr/100},
+                     {'params': bias_list, 'lr': lr/100},
+                     {'params': last_weight_list, 'lr': lr},
+                     {'params': last_bias_list, 'lr': lr}], momentum=0.9, lr=lr, weight_decay=1e-4, nesterov=False)
 
     return opt
 
@@ -121,7 +121,8 @@ def train(args):
             if iter % 50 == 0:
                 print('epoch:{} iter:{} loss:{}'.format(epoch, iter, loss))
 
-    torch.save(model.module.state_dict(), os.path.join(args.save_weights,args.session_name+'.pt'))
+    torch.save(model.module.state_dict(), os.path.join(
+        args.save_weights, args.session_name+'.pt'))
 
 
 if __name__ == '__main__':
