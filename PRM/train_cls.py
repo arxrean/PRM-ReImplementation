@@ -120,7 +120,7 @@ def train(args):
             if iter % 50 == 0:
                 print('epoch:{} iter:{} loss:{}'.format(epoch, iter, loss))
 
-    torch.save(model.module.state_dict(), args.save_weights)
+    torch.save(model.module.state_dict(), os.path.join(args.save_weights,args.session_name+'.pt'))
 
 
 if __name__ == '__main__':
