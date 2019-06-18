@@ -64,7 +64,7 @@ if __name__ == '__main__':
 	# new_dict=dict()
 	# for k,v in state['model'].items():
 	# 	new_dict[k[7:]]=v
-	model.load_state_dict(new_dict)
+	model.load_state_dict(state)
 	model=model.cuda()
 
 	idx = 0
