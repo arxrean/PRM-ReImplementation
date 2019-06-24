@@ -348,7 +348,7 @@ class AnchorBoxesManager():
         meshgrid_width, meshgrid_height = np.meshgrid(range(self.feature_map_width), range(self.feature_map_height))
 
         # Getting coordinates of centers of all the grid cells of the feature map
-        anchor_coordinates_feature_map = zip(meshgrid_height.flatten(), meshgrid_width.flatten())
+        anchor_coordinates_feature_map = list(zip(meshgrid_height.flatten(), meshgrid_width.flatten()))
         anchor_coordinates_feature_map = np.asarray( anchor_coordinates_feature_map )
         anchor_coordinates_feature_map = anchor_coordinates_feature_map + 0.5
 
