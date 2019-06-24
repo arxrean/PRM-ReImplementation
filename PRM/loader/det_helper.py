@@ -344,7 +344,6 @@ class AnchorBoxesManager():
         
         
         # feature_map_height, feature_map_width = compute_network_output_feature_map_size(input_size, stride=self.stride)
-        pdb.set_trace()
         meshgrid_width, meshgrid_height = np.meshgrid(range(self.feature_map_width), range(self.feature_map_height))
 
         # Getting coordinates of centers of all the grid cells of the feature map
@@ -377,7 +376,7 @@ class AnchorBoxesManager():
         
         anchor_boxes_sizes = self.get_anchor_boxes_sizes()
         anchor_boxes_center_coordinates = self.get_anchor_boxes_center_coordinates(input_size)
-        
+        pdb.set_trace()
         anchor_boxes_sizes_number = anchor_boxes_sizes.shape[1]
         anchor_boxes_center_coordinates_number = anchor_boxes_center_coordinates.shape[0]
         
