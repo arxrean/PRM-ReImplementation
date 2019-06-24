@@ -48,7 +48,7 @@ def voc12_train_count(args):
 		transforms.ToTensor(),
 		transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
 	])
-	dataset = PascalVOCDetection(images_folder_path='/u/zkou2/Data/VOCdevkit/VOC2012',
+	dataset = PascalVOCDetection(images_folder_path='/u/zkou2/Data/VOCdevkit/VOC2012/JPEGImages',
 								 annotation_json='/u/zkou2/Data/VOCdevkit/PASCAL_VOC_JSON/pascal_train2012.json',
 								 image_transform=train_transform)
 	train_loader = DataLoader(dataset, batch_size=16, num_workers=0,
