@@ -147,7 +147,7 @@ def train_infer(args):
 	results = np.concatenate(results, axis=0)
 	gt = np.concatenate(gt, axis=0)
 	gt[gt == 0] = 1
-    gt[gt == -1] = 0
+	gt[gt == -1] = 0
 	pass
 
 
