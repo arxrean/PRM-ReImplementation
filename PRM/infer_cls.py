@@ -157,7 +157,7 @@ def train_infer(args):
 	precision = dict()
 	recall = dict()
 	average_precision = dict()
-	for i in range(n_classes):
+	for i in range(len(class_names)):
 		precision[i], recall[i], _ = precision_recall_curve(
 			results[:, i], gt[:, i])
 		average_precision[i] = average_precision_score(
