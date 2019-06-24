@@ -13,6 +13,7 @@ import os
 import warnings
 import argparse
 import pdb
+from torchvision import datasets, transforms
 warnings.filterwarnings("ignore")
 
 
@@ -107,6 +108,8 @@ def sample():
 
 
 def train_infer(args):
+	class_names = modules.pascal_voc_object_categories()
+
     train_transform = transforms.Compose([
         transforms.Resize((448, 448)),
         transforms.ToTensor(),
