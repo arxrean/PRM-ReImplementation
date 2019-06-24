@@ -16,6 +16,10 @@ import pdb
 from torchvision import datasets, transforms
 warnings.filterwarnings("ignore")
 
+from loader.dataset import pascal_voc_classification
+from model.peak_net import peak_response_mapping
+from model.backbone import fc_resnet50
+
 
 def parse():
 	parser = argparse.ArgumentParser()
