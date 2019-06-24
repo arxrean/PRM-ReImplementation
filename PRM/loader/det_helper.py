@@ -376,7 +376,6 @@ class AnchorBoxesManager():
         
         anchor_boxes_sizes = self.get_anchor_boxes_sizes()
         anchor_boxes_center_coordinates = self.get_anchor_boxes_center_coordinates(input_size)
-        pdb.set_trace()
         anchor_boxes_sizes_number = anchor_boxes_sizes.shape[1]
         anchor_boxes_center_coordinates_number = anchor_boxes_center_coordinates.shape[0]
         
