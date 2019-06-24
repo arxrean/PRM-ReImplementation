@@ -133,15 +133,16 @@ def train_infer(args):
 
 	results = []
 	gt = []
-	for iter, pack in enumerate(tqdm(train_loader)):
-		if iter==3:
-			break
-		imgs = pack[1].cuda()
-		labels = pack[2].cuda()
+	with torch.no_grad():
+		for iter, pack in enumerate(tqdm(train_loader)):
+			if iter==3:
+				break
+			imgs = pack[1].cuda()
+			labels = pack[2].cuda()
 
-		aggregation = model.forward(imgs)
-		results.append(aggregation.detach().cpu().numpy())
-		gt.append(labels.cpu().numpy())
+			aggregation = model.forward(imgs)
+			results.append(aggregation.detach().cpu().numpy())
+			gt.append(labels.cpu().numpy())
 
 	results = np.concatenate(results, axis=0)
 	gt = np.concatenate(gt, axis=0)
