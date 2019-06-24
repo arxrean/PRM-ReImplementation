@@ -58,7 +58,7 @@ def voc12_train_count(args):
     model = model.cuda()
     model.load_state_dict(torch.load('./save/weights/peak_cls_train.pt'))
 
-    json_labels = json.load(open('/u/zkou2/Data/VOCdevkit/VOC2012/JPEGImages'))
+    json_labels = json.load(open('/u/zkou2/Data/VOCdevkit/PASCAL_VOC_JSON/pascal_train2012.json'))
 
     results = []
     gt = []
