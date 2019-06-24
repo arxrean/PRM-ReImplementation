@@ -134,6 +134,8 @@ def train_infer(args):
     results = []
     gt = []
     for iter, pack in enumerate(tqdm(train_loader)):
+    	if iter==3:
+    		break
         imgs = pack[1].cuda()
         labels = pack[2].cuda()
 
