@@ -138,7 +138,7 @@ def train_infer(args):
         labels = pack[2].cuda()
 
         aggregation = model.forward(imgs)
-        results.append(aggregation.cpu().numpy())
+        results.append(aggregation.detach().cpu().numpy())
         gt.append(labels.cpu().numpy())
 
     results = np.concatenate(results, axis=0)
