@@ -14,6 +14,7 @@ import warnings
 import argparse
 import pdb
 from torchvision import datasets, transforms
+from torch.utils.data import Dataset, DataLoader
 warnings.filterwarnings("ignore")
 
 from loader.dataset import pascal_voc_classification
