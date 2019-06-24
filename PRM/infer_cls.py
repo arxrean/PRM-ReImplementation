@@ -137,8 +137,6 @@ def train_infer(args):
 	gt = []
 	with torch.no_grad():
 		for iter, pack in enumerate(tqdm(train_loader)):
-			if iter==3:
-				break
 			imgs = pack[1].cuda()
 			labels = pack[2].cuda()
 
