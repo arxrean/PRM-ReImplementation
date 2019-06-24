@@ -8,6 +8,7 @@ import matplotlib.patches as patches
 
 from PIL import Image, ImageOps
 from torch.autograd import Variable
+import pdb
 
 
 def random_crop_with_bounding_boxes(input_img, crop_size, bboxes_center_xywh, fill_label=0):
@@ -375,6 +376,7 @@ class AnchorBoxesManager():
         """
         
         anchor_boxes_sizes = self.get_anchor_boxes_sizes()
+        pdb.set_trace()
         anchor_boxes_center_coordinates = self.get_anchor_boxes_center_coordinates(input_size)
         
         anchor_boxes_sizes_number = anchor_boxes_sizes.shape[1]
