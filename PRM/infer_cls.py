@@ -169,7 +169,7 @@ def train_infer(args):
 	average_precision["micro"] = average_precision_score(results, gt,
 														 average="micro")
 
-	for i in range(n_classes):
+	for i in range(len(class_names)):
 		print('class:{} precision:{}'.format(class_names[i], precision[i]))
 		print('class:{} recall:{}'.format(class_names[i], recall[i]))
 		print('class:{} average_precision:{}'.format(
