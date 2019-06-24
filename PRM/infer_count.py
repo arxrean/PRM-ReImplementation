@@ -19,6 +19,10 @@ from torch.utils.data import Dataset, DataLoader
 from tqdm import tqdm
 warnings.filterwarnings("ignore")
 
+from model.backbone import fc_resnet50
+from model.peak_net import peak_response_mapping
+from loader.dataset import pascal_voc_classification
+
 
 def parse():
 	parser = argparse.ArgumentParser()
@@ -48,7 +52,7 @@ def voc12_train_count(args):
 								 annotation_json='/u/zkou2/Data/VOCdevkit/PASCAL_VOC_JSON/pascal_train2012.json',
 								 image_transform=train_transform)
 	train_loader = DataLoader(dataset, batch_size=16, num_workers=0,
-							  pin_memory=True, drop_last=False, shuffle=True)
+							  pin_memory=True, drop_last=False, shuffle=False)
 	model = peak_response_mapping(
 		backbone=fc_resnet50(), sub_pixel_locating_factor=8)
 	model = model.cuda()
