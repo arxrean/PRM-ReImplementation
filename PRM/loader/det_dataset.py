@@ -5,7 +5,7 @@ import torchvision.transforms as transforms
 
 from torchvision.datasets import CocoDetection
 
-from det_dataset import (compute_bboxes_ious,
+from det_helper import (compute_bboxes_ious,
                          convert_bbox_topleft_xywh_tensor_to_center_xywh,
                          convert_bbox_center_xywh_tensor_to_xyxy,
                          convert_bbox_center_xywh_tensor_to_topleft_xywh,
