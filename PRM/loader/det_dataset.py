@@ -131,6 +131,7 @@ class PascalVOCCount(data.Dataset):
 
     def __getitem__(self, idx):
         img_name = self.img_list[idx]
+        print(img_name)
         img_path = os.path.join(self.args.voc12_root, str(
             img_name)[:4]+'_'+str(img_name)[4:])+'.jpg'
         img = Image.open(img_path).convert('RGB')
@@ -142,10 +143,6 @@ class PascalVOCCount(data.Dataset):
         for cat in cat_dict.keys():
             cls_labels[cat-1] = 1
             cnt_labels[cat-1] = len(cat_dict[cat])
-
-        print(img_name)
-        if img_name=='2008001203':
-            pdb.set_trace()
 
         return img_trans, cls_labels, cnt_labels
 
