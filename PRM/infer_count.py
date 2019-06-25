@@ -1,7 +1,7 @@
-from loader.dataset import pascal_voc_classification
-from model.peak_net import peak_response_mapping
+from loader.det_dataset import PascalVOCDetection, convert_json_labels_to_csv
 from model.backbone import fc_resnet50
-from loader.det_dataset import PascalVOCDetection
+from model.peak_net import peak_response_mapping
+from loader.dataset import pascal_voc_classification
 from nest import modules, run_tasks
 from scipy.misc import imresize
 from scipy.io import loadmat
@@ -58,7 +58,8 @@ def voc12_train_count(args):
     model = model.cuda()
     model.load_state_dict(torch.load('./save/weights/peak_cls_train.pt'))
 
-    json_labels = json.load(open('/u/zkou2/Data/VOCdevkit/PASCAL_VOC_JSON/pascal_train2012.json'))
+    json_labels = json.load(
+        open('/u/zkou2/Data/VOCdevkit/PASCAL_VOC_JSON/pascal_train2012.json'))
 
     results = []
     gt = []
@@ -68,5 +69,7 @@ def voc12_train_count(args):
 
 
 if __name__ == '__main__':
-    args = parse()
-    voc12_train_count(args)
+    # args = parse()
+    # voc12_train_count(args)
+
+    convert_json_labels_to_csv('/u/zkou2/Data/VOCdevkit/PASCAL_VOC_JSON/pascal_train2012.json')

@@ -6,14 +6,14 @@ import torchvision.transforms as transforms
 from torchvision.datasets import CocoDetection
 
 from loader.det_helper import (compute_bboxes_ious,
-                         convert_bbox_topleft_xywh_tensor_to_center_xywh,
-                         convert_bbox_center_xywh_tensor_to_xyxy,
-                         convert_bbox_center_xywh_tensor_to_topleft_xywh,
-                         display_bboxes_center_xywh,
-                         compute_network_output_feature_map_size,
-                         AnchorBoxesManager,
-                         pad_to_size_with_bounding_boxes,
-                         random_crop_with_bounding_boxes)
+                               convert_bbox_topleft_xywh_tensor_to_center_xywh,
+                               convert_bbox_center_xywh_tensor_to_xyxy,
+                               convert_bbox_center_xywh_tensor_to_topleft_xywh,
+                               display_bboxes_center_xywh,
+                               compute_network_output_feature_map_size,
+                               AnchorBoxesManager,
+                               pad_to_size_with_bounding_boxes,
+                               random_crop_with_bounding_boxes)
 
 
 class PascalVOCDetection(data.Dataset):
@@ -108,9 +108,13 @@ class PascalVOCDetection(data.Dataset):
         # return pil_img_padded, ground_truth_boxes_center_xywh_padded
         return img_tensor_transformed, target_deltas, target_classes
 
+
 def convert_json_labels_to_csv(json_path):
+    pdb.set_trace()
     json_labels = json.load(open(json_path))
+    annotations = json_labels['annotations']
 
 
 if __name__ == '__main__':
-    convert_json_labels_to_csv('/u/zkou2/Data/VOCdevkit/PASCAL_VOC_JSON/pascal_train2012.json')
+    convert_json_labels_to_csv(
+        '/u/zkou2/Data/VOCdevkit/PASCAL_VOC_JSON/pascal_train2012.json')
