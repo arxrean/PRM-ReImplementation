@@ -120,26 +120,22 @@ def convert_json_labels_to_csv(json_path):
     categories = json_labels['categories']
 
     res = dict()
-    cnt=0
     for anno in annotations:
-        cnt+=1
         image_id = anno['image_id']
         category_id = anno['category_id']
         bbox = anno['bbox']
 
-        anno_dict = dict()
-        if len(np.asarray(bbox).shape) == 1:
-            anno_dict[category_id] = [bbox]
+        if image_id in res:
+            anno_dict = res[image_id]
+            if category_id in anno_dict:
+                anno_dict[category_id].append(bbox)
+            else:
+                anno_dict[category_id] = [bbox]
         else:
-            for i, bb in enumerate(bbox):
-                cat = category_id[i]
-                if cat not in anno_dict:
-                    anno_dict[cat] = []
-                anno_dict[cat].append(bbox)
+            anno_dict = dict()
+            anno_dict[category_id] = [bbox]
+            res[image_id] = anno_dict
 
-        res[image_id] = anno_dict
-
-    print(cnt)
     with open('anno_dict.pkl', 'wb') as f:
         pickle.dump(res, f)
 
