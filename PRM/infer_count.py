@@ -152,7 +152,7 @@ def voc12_train_countset_cnt(args):
 	gt = []
 	for iter, pack in enumerate(tqdm(train_loader)):
 		imgs = pack[0].cuda()
-		labels = pack[1].cuda()
+		labels = pack[1][0]
 	# 	cnt_labels = pack[2]
 
 	# 	aggregation, class_response_maps, valid_peak_list, peak_response_maps = model.forward(
