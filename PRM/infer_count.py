@@ -77,6 +77,13 @@ def voc12_train_countset_cls(args):
     dataset = PascalVOCCount(
         json_to_pkl_file=args.json_to_pickle, transform=train_transform, args=args)
 
+    model = peak_response_mapping(
+		backbone=fc_resnet50(), sub_pixel_locating_factor=8)
+	model = model.cuda()
+	model.load_state_dict(torch.load('./save/weights/peak_cls_train.pt'))
+
+	pass
+
 
 if __name__ == '__main__':
     args = parse()
