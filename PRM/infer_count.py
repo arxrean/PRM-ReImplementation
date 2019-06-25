@@ -29,7 +29,7 @@ def parse():
 	parser.add_argument("--session_name", default="peak_cls_train", type=str)
 	# data
 	parser.add_argument(
-		"--voc12_root", default='/u/zkou2/Data/VOCdevkit/VOC2012', type=str)
+		"--voc12_root", default='/u/zkou2/Data/VOCdevkit/VOC2012/JPEGImages', type=str)
 	parser.add_argument(
 		"--json_to_pickle", default='/u/zkou2/Code/PRM-ReImplementation/PRM/save/anno_dict.pkl', type=str)
 
