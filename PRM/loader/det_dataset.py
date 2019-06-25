@@ -114,7 +114,13 @@ class PascalVOCDetection(data.Dataset):
 def convert_json_labels_to_csv(json_path):
     pdb.set_trace()
     json_labels = json.load(open(json_path))
+    images = json_labels['images']
     annotations = json_labels['annotations']
+    categories = json_labels['categories']
+
+    res=[]
+    for anno in annotations:
+        pass
 
 
 if __name__ == '__main__':
