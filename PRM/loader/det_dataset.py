@@ -6,6 +6,8 @@ import pdb
 import json
 import pickle
 import numpy as np
+from PIL import Image
+import os
 
 from torchvision.datasets import CocoDetection
 
@@ -113,6 +115,38 @@ class PascalVOCDetection(data.Dataset):
         return img_tensor_transformed, target_deltas, target_classes
 
 
+def PascalVOCCount(data.Dataset):
+    categories = [
+        'aeroplane', 'bicycle', 'bird', 'boat',
+        'bottle', 'bus', 'car', 'cat', 'chair',
+        'cow', 'diningtable', 'dog', 'horse',
+        'motorbike', 'person', 'pottedplant',
+        'sheep', 'sofa', 'train', 'tvmonitor']
+
+    def __init__(self, json_to_pkl_file, transform, args):
+        self.json_to_pkl_file = pickle.load(open(json_to_pkl_file, 'rb'))
+        self.img_list = list(json_to_pkl_file.keys())
+        self.args = args
+        self.transform = transform
+
+    def __getitem__(self, idx):
+        img_name = self.img_list[idx]
+        img_path = os.path.join(self.args.voc12_root, img_name)+'.jpg'
+        img = Image.open(img_path).convert('RGB')
+        img_trans = self.transform(img)
+
+        cls_labels = np.zeros(20)
+        cat_dict = self.json_to_pkl_file[img_name]
+        for cat in cat_dict.keys():
+            cls_labels[cat] = 1
+
+        return img_trans, cls_labels, cat_dict
+
+    def __len__(self):
+
+        return len(self.img_list)
+
+
 def convert_json_labels_to_csv(json_path):
     json_labels = json.load(open(json_path))
     images = json_labels['images']
@@ -136,12 +170,6 @@ def convert_json_labels_to_csv(json_path):
             anno_dict[category_id] = [bbox]
             res[image_id] = anno_dict
 
-    cnt=0
-    for id in res.keys():
-        for cat in res[id].keys():
-            for b in res[id][cat]:
-                cnt+=1
-    print(cnt)
     with open('anno_dict.pkl', 'wb') as f:
         pickle.dump(res, f)
 

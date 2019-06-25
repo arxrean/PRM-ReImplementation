@@ -1,4 +1,4 @@
-from loader.det_dataset import PascalVOCDetection, convert_json_labels_to_csv
+from loader.det_dataset import PascalVOCDetection, convert_json_labels_to_csv, PascalVOCCount
 from model.backbone import fc_resnet50
 from model.peak_net import peak_response_mapping
 from loader.dataset import pascal_voc_classification
@@ -30,6 +30,9 @@ def parse():
     # data
     parser.add_argument(
         "--voc12_root", default='/u/zkou2/Data/VOCdevkit/VOC2012', type=str)
+    parser.add_argument(
+        "--json_to_pickle", default='/u/zkou2/Code/PRM-ReImplementation/PRM/save/anno_dict.pkl', type=str)
+
     parser.add_argument("--crop_size", default=448, type=int)
     # config
     parser.add_argument("--batch_size", default=16, type=int)
@@ -42,7 +45,7 @@ def parse():
     return args
 
 
-def voc12_train_count(args):
+def voc12_train_det(args):
     train_transform = transforms.Compose([
         transforms.Resize((448, 448)),
         transforms.ToTensor(),
@@ -58,9 +61,6 @@ def voc12_train_count(args):
     model = model.cuda()
     model.load_state_dict(torch.load('./save/weights/peak_cls_train.pt'))
 
-    json_labels = json.load(
-        open('/u/zkou2/Data/VOCdevkit/PASCAL_VOC_JSON/pascal_train2012.json'))
-
     results = []
     gt = []
     with torch.no_grad():
@@ -68,8 +68,17 @@ def voc12_train_count(args):
             pass
 
 
-if __name__ == '__main__':
-    # args = parse()
-    # voc12_train_count(args)
+def voc12_train_countset_cls(args):
+    train_transform = transforms.Compose([
+        transforms.Resize((448, 448)),
+        transforms.ToTensor(),
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+    ])
+    dataset = PascalVOCCount(
+        json_to_pkl_file=args.json_to_pickle, transform=train_transform, args=args)
 
-    convert_json_labels_to_csv('/u/zkou2/Data/VOCdevkit/PASCAL_VOC_JSON/pascal_train2012.json')
+
+if __name__ == '__main__':
+    args = parse()
+    # voc12_train_count(args)
+    voc12_train_countset_cls(args)
