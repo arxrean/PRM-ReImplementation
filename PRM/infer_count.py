@@ -152,8 +152,6 @@ def voc12_train_countset_cnt(args):
 	results = []
 	gt = []
 	for iter, pack in enumerate(tqdm(train_loader)):
-		if pack[0] is None:
-			print('abc')
 		imgs = pack[0].cuda()
 		labels = pack[1].cuda()
 		cnt_labels = pack[2]
