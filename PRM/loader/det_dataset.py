@@ -137,7 +137,6 @@ class PascalVOCCount(data.Dataset):
         img = Image.open(img_path).convert('RGB')
         img_trans = self.transform(img)
 
-        pdb.set_trace()
         cls_labels = np.zeros(20)
         cat_dict = self.json_to_pkl_file[img_name]
         for cat in cat_dict.keys():
