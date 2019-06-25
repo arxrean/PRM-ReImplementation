@@ -139,7 +139,7 @@ def voc12_train_countset_cnt(args):
     ])
     dataset = PascalVOCCount(
         json_to_pkl_file=args.json_to_pickle, transform=train_transform, args=args)
-    train_loader = DataLoader(dataset, batch_size=16, num_workers=0,
+    train_loader = DataLoader(dataset, batch_size=1, num_workers=0,
                               pin_memory=True, drop_last=False, shuffle=False)
 
     model = peak_response_mapping(
@@ -156,7 +156,8 @@ def voc12_train_countset_cnt(args):
             labels = pack[1].cuda()
             cnt_labels = pack[2]
 
-            aggregation = model.forward(imgs)
+            aggregation, class_response_maps, valid_peak_list, peak_response_maps = model.forward(
+                imgs)
             results.append(aggregation.detach().cpu().numpy())
             gt.append(labels.cpu().numpy())
 
