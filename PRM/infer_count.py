@@ -17,6 +17,7 @@ import torch
 import json
 import os
 import json
+import pickle
 import warnings
 import argparse
 import pdb
@@ -158,11 +159,14 @@ def voc12_train_countset_cnt(args):
         aggregation, class_response_maps, valid_peak_list, peak_response_maps = model.forward(
             imgs)
 
-        res=np.zeros(20)
+        res = np.zeros(20)
         for l in valid_peak_list:
-        	res[l[1]]+=1
+            res[l[1]] += 1
         results.append(res)
-        gt.append(labels.cpu().numpy())
+        gt.append(cnt_labels)
+
+    with open('cnt.pkl', 'wb') as f:
+        pickle.dump([results, gt], f)
 
 
 if __name__ == '__main__':
