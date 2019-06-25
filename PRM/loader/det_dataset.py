@@ -131,9 +131,6 @@ class PascalVOCCount(data.Dataset):
 
     def __getitem__(self, idx):
         img_name = self.img_list[idx]
-        print(img_name)
-        if '2008001203' in str(img_name):
-            pdb.set_trace()
         img_path = os.path.join(self.args.voc12_root, str(
             img_name)[:4]+'_'+str(img_name)[4:])+'.jpg'
         img = Image.open(img_path).convert('RGB')
