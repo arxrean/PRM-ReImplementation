@@ -150,16 +150,15 @@ def voc12_train_countset_cnt(args):
 
     results = []
     gt = []
-    with torch.no_grad():
-        for iter, pack in enumerate(tqdm(train_loader)):
-            imgs = pack[0].cuda()
-            labels = pack[1].cuda()
-            cnt_labels = pack[2]
+    for iter, pack in enumerate(tqdm(train_loader)):
+        imgs = pack[0].cuda()
+        labels = pack[1].cuda()
+        cnt_labels = pack[2]
 
-            aggregation, class_response_maps, valid_peak_list, peak_response_maps = model.forward(
-                imgs)
-            results.append(aggregation.detach().cpu().numpy())
-            gt.append(labels.cpu().numpy())
+        aggregation, class_response_maps, valid_peak_list, peak_response_maps = model.forward(
+            imgs)
+        results.append(aggregation.detach().cpu().numpy())
+        gt.append(labels.cpu().numpy())
 
 
 if __name__ == '__main__':
