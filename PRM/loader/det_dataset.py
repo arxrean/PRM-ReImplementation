@@ -146,7 +146,7 @@ class PascalVOCCount(data.Dataset):
             cls_labels[cat-1] = 1
             cnt_labels[cat-1] = len(cat_dict[cat])
 
-        return img_trans, cls_labels, cnt_labels
+        return [img_trans, cls_labels, cnt_labels]
 
     def __len__(self):
 
