@@ -76,13 +76,53 @@ def voc12_train_countset_cls(args):
 	])
 	dataset = PascalVOCCount(
 		json_to_pkl_file=args.json_to_pickle, transform=train_transform, args=args)
+	train_loader = DataLoader(dataset, batch_size=16, num_workers=0,
+							  pin_memory=True, drop_last=False, shuffle=False)
 
 	model = peak_response_mapping(
 		backbone=fc_resnet50(), sub_pixel_locating_factor=8)
 	model = model.cuda()
 	model.load_state_dict(torch.load('./save/weights/peak_cls_train.pt'))
 
-	pass
+	results = []
+	gt = []
+	with torch.no_grad():
+		for iter, pack in enumerate(tqdm(train_loader)):
+			imgs = pack[0].cuda()
+			labels = pack[1].cuda()
+
+			aggregation = model.forward(imgs)
+			results.append(aggregation.detach().cpu().numpy())
+			gt.append(labels.cpu().numpy())
+
+	results = np.concatenate(results, axis=0)
+	gt = np.concatenate(gt, axis=0)
+	results[results <= 0] = 0
+	results[results > 0] = 1
+
+	# For each class
+	precision = dict()
+	recall = dict()
+	average_precision = dict()
+	for i in range(len(class_names)):
+		precision[i], recall[i], _ = precision_recall_curve(
+			results[:, i], gt[:, i])
+		average_precision[i] = average_precision_score(
+			results[:, i], gt[:, i])
+
+	# A "micro-average": quantifying score on all classes jointly
+	precision["micro"], recall["micro"], _ = precision_recall_curve(results.ravel(),
+																	gt.ravel())
+	average_precision["micro"] = average_precision_score(results, gt,
+														 average="micro")
+
+	for i in range(len(class_names)):
+		print('class:{} precision:{}'.format(class_names[i], precision[i]))
+		print('class:{} recall:{}'.format(class_names[i], recall[i]))
+		print('class:{} average_precision:{}'.format(
+			class_names[i], average_precision[i]))
+	print('avg precision:{} avg recall:{} avg average_precision:{}'.format(
+		precision["micro"], recall["micro"], average_precision["micro"]))
 
 
 if __name__ == '__main__':
