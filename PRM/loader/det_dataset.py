@@ -130,10 +130,8 @@ class PascalVOCCount(data.Dataset):
         self.transform = transform
 
     def __getitem__(self, idx):
-        print(idx)
         img_name = self.img_list[idx]
         img_path = os.path.join(self.args.voc12_root, str(img_name)[:4]+'_'+str(img_name)[4:])+'.jpg'
-        print(img_path)
         img = Image.open(img_path).convert('RGB')
         img_trans = self.transform(img)
 
@@ -142,7 +140,7 @@ class PascalVOCCount(data.Dataset):
         for cat in cat_dict.keys():
             cls_labels[cat-1] = 1
 
-        return img_trans, cls_labels, cat_dict
+        return img_trans, cls_labels
 
     def __len__(self):
 
