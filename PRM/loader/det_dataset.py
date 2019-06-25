@@ -125,11 +125,14 @@ def convert_json_labels_to_csv(json_path):
         bbox = anno['bbox']
 
         anno_dict = dict()
-        for i, bb in enumerate(bbox):
-            cat = category_id[i]
-            if cat not in anno_dict:
-                anno_dict[cat] = []
-            anno_dict[cat].append(bbox)
+        if len(np.array(bbox).shape) == 1:
+            anno_dict[category_id] = bbox
+        else:
+            for i, bb in enumerate(bbox):
+                cat = category_id[i]
+                if cat not in anno_dict:
+                    anno_dict[cat] = []
+                anno_dict[cat].append(bbox)
 
         res[image_id] = anno_dict
 
