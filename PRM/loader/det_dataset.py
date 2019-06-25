@@ -125,7 +125,7 @@ class PascalVOCCount(data.Dataset):
 
     def __init__(self, json_to_pkl_file, transform, args):
         self.json_to_pkl_file = pickle.load(open(json_to_pkl_file, 'rb'))
-        self.img_list = list(json_to_pkl_file.keys())
+        self.img_list = list(self.json_to_pkl_file.keys())
         self.args = args
         self.transform = transform
 
