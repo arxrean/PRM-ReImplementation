@@ -4,6 +4,7 @@ import torchvision
 import torchvision.transforms as transforms
 import pdb
 import json
+import pickle
 
 from torchvision.datasets import CocoDetection
 
@@ -112,15 +113,28 @@ class PascalVOCDetection(data.Dataset):
 
 
 def convert_json_labels_to_csv(json_path):
-    pdb.set_trace()
     json_labels = json.load(open(json_path))
     images = json_labels['images']
     annotations = json_labels['annotations']
     categories = json_labels['categories']
 
-    res=[]
+    res = dict()
     for anno in annotations:
-        pass
+        image_id = anno['image_id']
+        category_id = anno['category_id']
+        bbox = anno['bbox']
+
+        anno_dict = dict()
+        for i, bb in enumerate(bbox):
+            cat = category_id[i]
+            if cat not in anno_dict:
+                anno_dict[cat] = []
+            anno_dict[cat].append(bbox)
+
+        res[image_id] = anno_dict
+
+    with open('anno_dict.pkl', 'wb') as f:
+        pickle.dump(res, f)
 
 
 if __name__ == '__main__':
