@@ -108,8 +108,9 @@ class PascalVOCDetection(data.Dataset):
         # return pil_img_padded, ground_truth_boxes_center_xywh_padded
         return img_tensor_transformed, target_deltas, target_classes
 
+def convert_json_labels_to_csv(json_path):
+    json_labels = json.load(open(json_path))
+
 
 if __name__ == '__main__':
-    dataset = PascalVOCDetection(images_folder_path='/u/zkou2/Data/VOCdevkit/VOC2012',
-                                 annotation_json='/u/zkou2/Data/VOCdevkit/PASCAL_VOC_JSON/pascal_train2012.json',
-                                 image_transform=None)
+    convert_json_labels_to_csv('/u/zkou2/Data/VOCdevkit/PASCAL_VOC_JSON/pascal_train2012.json')
