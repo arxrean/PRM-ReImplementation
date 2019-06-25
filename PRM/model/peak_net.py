@@ -254,7 +254,7 @@ class PeakResponseMapping(nn.Sequential):
                     # instance segmentation using build-in proposal retriever
                     return self.instance_seg(class_response_maps, valid_peak_list, peak_response_maps, retrieval_cfg)
             else:
-                return None
+                return aggregation, None, None, None
         else:
             # classification confidence scores
             return aggregation
