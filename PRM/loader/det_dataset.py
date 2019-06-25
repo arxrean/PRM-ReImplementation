@@ -136,6 +136,12 @@ def convert_json_labels_to_csv(json_path):
             anno_dict[category_id] = [bbox]
             res[image_id] = anno_dict
 
+    cnt=0
+    for id in res.keys():
+        for cat in res[id].keys():
+            for b in res[id][cat]:
+                cnt+=1
+    print(cnt)
     with open('anno_dict.pkl', 'wb') as f:
         pickle.dump(res, f)
 
