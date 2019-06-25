@@ -131,7 +131,7 @@ class PascalVOCCount(data.Dataset):
 
         zero=0
         for file in self.json_to_pkl_file.keys():
-            if 0 in list(self.json_to_pkl_file[file].keys()):
+            if 1 in list(self.json_to_pkl_file[file].keys()):
                 zero+=1
 
         pdb.set_trace()
