@@ -124,6 +124,7 @@ def convert_json_labels_to_csv(json_path):
         image_id = anno['image_id']
         category_id = anno['category_id']
         bbox = anno['bbox']
+        print(bbox)
 
         anno_dict = dict()
         if len(np.asarray(bbox).shape) == 1:
