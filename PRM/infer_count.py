@@ -153,19 +153,19 @@ def voc12_train_countset_cnt(args):
 	for iter, pack in enumerate(tqdm(train_loader)):
 		imgs = pack[0].cuda()
 		labels = pack[1].cuda()
-		cnt_labels = pack[2]
+	# 	cnt_labels = pack[2]
 
-		aggregation, class_response_maps, valid_peak_list, peak_response_maps = model.forward(
-			imgs)
+	# 	aggregation, class_response_maps, valid_peak_list, peak_response_maps = model.forward(
+	# 		imgs)
 
-		res = np.zeros(20)
-		for l in valid_peak_list:
-			res[l[1]] += 1
-		results.append(res)
-		gt.append(cnt_labels)
+	# 	res = np.zeros(20)
+	# 	for l in valid_peak_list:
+	# 		res[l[1]] += 1
+	# 	results.append(res)
+	# 	gt.append(cnt_labels)
 
-	with open('cnt.pkl', 'wb') as f:
-		pickle.dump([results, gt], f)
+	# with open('cnt.pkl', 'wb') as f:
+	# 	pickle.dump([results, gt], f)
 
 
 if __name__ == '__main__':
