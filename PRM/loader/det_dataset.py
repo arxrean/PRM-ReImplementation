@@ -5,6 +5,7 @@ import torchvision.transforms as transforms
 import pdb
 import json
 import pickle
+import numpy as np
 
 from torchvision.datasets import CocoDetection
 
@@ -125,7 +126,7 @@ def convert_json_labels_to_csv(json_path):
         bbox = anno['bbox']
 
         anno_dict = dict()
-        if len(np.array(bbox).shape) == 1:
+        if len(np.asarray(bbox).shape) == 1:
             anno_dict[category_id] = bbox
         else:
             for i, bb in enumerate(bbox):
