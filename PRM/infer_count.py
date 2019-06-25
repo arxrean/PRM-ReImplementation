@@ -140,8 +140,7 @@ def voc12_train_countset_cnt(args):
 	])
 	dataset = PascalVOCCount(
 		json_to_pkl_file=args.json_to_pickle, transform=train_transform, args=args)
-	train_loader = DataLoader(dataset, batch_size=1, num_workers=0,
-							  pin_memory=True, drop_last=False, shuffle=False)
+	train_loader = DataLoader(dataset, batch_size=1, num_workers=0,shuffle=False)
 
 	model = peak_response_mapping(
 		backbone=fc_resnet50(), sub_pixel_locating_factor=8)
