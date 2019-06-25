@@ -69,6 +69,8 @@ def voc12_train_det(args):
 
 
 def voc12_train_countset_cls(args):
+	class_names = modules.pascal_voc_object_categories()
+	
 	train_transform = transforms.Compose([
 		transforms.Resize((448, 448)),
 		transforms.ToTensor(),
