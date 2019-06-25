@@ -142,7 +142,9 @@ class PascalVOCCount(data.Dataset):
         for cat in cat_dict.keys():
             cls_labels[cat-1] = 1
             cnt_labels[cat-1] = len(cat_dict[cat])
+
         if img_name=='2008001203':
+            print(img_name)
             pdb.set_trace()
 
         return img_trans, cls_labels, cnt_labels
