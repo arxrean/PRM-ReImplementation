@@ -125,11 +125,10 @@ class PascalVOCCount(data.Dataset):
 
     def __init__(self, json_to_pkl_file, transform, args):
         self.json_to_pkl_file = pickle.load(open(json_to_pkl_file, 'rb'))
+        self.json_to_pkl_file.pop(2008001203, None)
         self.img_list = list(self.json_to_pkl_file.keys())
         self.args = args
         self.transform = transform
-
-        self.json_to_pkl_file.pop(2008001203, None)
 
     def __getitem__(self, idx):
         img_name = self.img_list[idx]
