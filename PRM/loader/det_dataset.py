@@ -115,7 +115,7 @@ class PascalVOCDetection(data.Dataset):
         return img_tensor_transformed, target_deltas, target_classes
 
 
-def PascalVOCCount(data.Dataset):
+class PascalVOCCount(data.Dataset):
     categories = [
         'aeroplane', 'bicycle', 'bird', 'boat',
         'bottle', 'bus', 'car', 'cat', 'chair',
