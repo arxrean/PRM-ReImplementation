@@ -131,16 +131,19 @@ class PascalVOCCount(data.Dataset):
 
     def __getitem__(self, idx):
         img_name = self.img_list[idx]
-        img_path = os.path.join(self.args.voc12_root, str(img_name)[:4]+'_'+str(img_name)[4:])+'.jpg'
+        img_path = os.path.join(self.args.voc12_root, str(
+            img_name)[:4]+'_'+str(img_name)[4:])+'.jpg'
         img = Image.open(img_path).convert('RGB')
         img_trans = self.transform(img)
 
         cls_labels = np.zeros(20)
+        cnt_labels = np.zeros(20)
         cat_dict = self.json_to_pkl_file[img_name]
         for cat in cat_dict.keys():
             cls_labels[cat-1] = 1
+            cnt_labels[cat-1] = len(cat_dict[cat])
 
-        return img_trans, cls_labels
+        return img_trans, cls_labels, cnt_labels
 
     def __len__(self):
 

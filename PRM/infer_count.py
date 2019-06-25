@@ -88,6 +88,8 @@ def voc12_train_countset_cls(args):
 	gt = []
 	with torch.no_grad():
 		for iter, pack in enumerate(tqdm(train_loader)):
+			if iter==5:
+				break
 			imgs = pack[0].cuda()
 			labels = pack[1].cuda()
 
