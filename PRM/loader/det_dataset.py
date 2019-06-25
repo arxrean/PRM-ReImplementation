@@ -129,6 +129,8 @@ class PascalVOCCount(data.Dataset):
         self.args = args
         self.transform = transform
 
+        self.json_to_pkl_file.pop(2008001203, None)
+
     def __getitem__(self, idx):
         img_name = self.img_list[idx]
         img_path = os.path.join(self.args.voc12_root, str(
