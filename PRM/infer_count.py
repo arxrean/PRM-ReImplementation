@@ -129,7 +129,39 @@ def voc12_train_countset_cls(args):
         precision["micro"], recall["micro"], average_precision["micro"]))
 
 
+def voc12_train_countset_cnt(args):
+    class_names = modules.pascal_voc_object_categories()
+
+    train_transform = transforms.Compose([
+        transforms.Resize((448, 448)),
+        transforms.ToTensor(),
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+    ])
+    dataset = PascalVOCCount(
+        json_to_pkl_file=args.json_to_pickle, transform=train_transform, args=args)
+    train_loader = DataLoader(dataset, batch_size=16, num_workers=0,
+                              pin_memory=True, drop_last=False, shuffle=False)
+
+    model = peak_response_mapping(
+        backbone=fc_resnet50(), sub_pixel_locating_factor=8)
+    model = model.cuda()
+    model.load_state_dict(torch.load('./save/weights/peak_cls_train.pt'))
+    model = model.inference()
+
+    results = []
+    gt = []
+    with torch.no_grad():
+        for iter, pack in enumerate(tqdm(train_loader)):
+            imgs = pack[0].cuda()
+            labels = pack[1].cuda()
+            cnt_labels = pack[2]
+
+            aggregation = model.forward(imgs)
+            results.append(aggregation.detach().cpu().numpy())
+            gt.append(labels.cpu().numpy())
+
+
 if __name__ == '__main__':
     args = parse()
     # voc12_train_count(args)
-    voc12_train_countset_cls(args)
+    voc12_train_countset_cnt(args)
