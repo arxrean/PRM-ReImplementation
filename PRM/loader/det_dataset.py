@@ -136,11 +136,14 @@ class PascalVOCCount(data.Dataset):
         img_trans = self.transform(img)
 
         cls_labels = np.zeros(20)
-        cat_dict = self.json_to_pkl_file[img_name]
-        for cat in cat_dict.keys():
-            cls_labels[cat-1] = 1
+        try:
+            cat_dict = self.json_to_pkl_file[img_name]
+            for cat in cat_dict.keys():
+                cls_labels[cat-1] = 1
 
-        return img_trans, cls_labels, cat_dict
+            return img_trans, cls_labels, cat_dict
+        except:
+            print(img_name)
 
     def __len__(self):
 
