@@ -127,7 +127,7 @@ def convert_json_labels_to_csv(json_path):
 
         anno_dict = dict()
         if len(np.asarray(bbox).shape) == 1:
-            anno_dict[category_id] = bbox
+            anno_dict[category_id] = [bbox]
         else:
             for i, bb in enumerate(bbox):
                 cat = category_id[i]
