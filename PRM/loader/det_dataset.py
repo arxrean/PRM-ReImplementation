@@ -130,8 +130,9 @@ class PascalVOCCount(data.Dataset):
         self.transform = transform
 
     def __getitem__(self, idx):
+        pdb.set_trace()
         img_name = self.img_list[idx]
-        img_path = os.path.join(self.args.voc12_root, img_name)+'.jpg'
+        img_path = os.path.join(self.args.voc12_root, str(img_name))+'.jpg'
         img = Image.open(img_path).convert('RGB')
         img_trans = self.transform(img)
 
