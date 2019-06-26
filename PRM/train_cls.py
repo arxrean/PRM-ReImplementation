@@ -16,8 +16,8 @@ from model.backbone import fc_resnet50
 
 def parse():
     parser = argparse.ArgumentParser()
-    # parser.add_argument("--session_name", default="peak_cls_train", type=str)
-    parser.add_argument("--session_name", default="train_with_center_loss", type=str)
+    parser.add_argument("--session_name", default="peak_cls_train", type=str)
+    # parser.add_argument("--session_name", default="train_with_center_loss", type=str)
     # data
     parser.add_argument(
         "--voc12_root", default='/u/zkou2/Data/VOCdevkit', type=str)
@@ -123,7 +123,7 @@ def train(args):
                 print('epoch:{} iter:{} loss:{}'.format(epoch, iter, loss))
 
     torch.save(model.module.state_dict(), os.path.join(
-        args.save_weights, args.session_name+'.pt'))
+        args.save_weights, args.session_name+'40.pt'))
 
 def train_with_center_loss(args):
     train_transform = transforms.Compose([
