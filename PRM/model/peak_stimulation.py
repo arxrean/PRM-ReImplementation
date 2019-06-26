@@ -1,7 +1,7 @@
 import torch
 import torch.nn.functional as F
 from torch.autograd import Function
-
+import pdb
 
 class PeakStimulation(Function):
 
@@ -32,6 +32,7 @@ class PeakStimulation(Function):
         ctx.mark_non_differentiable(peak_list)
         
         # peak aggregation
+        pdb.set_trace()
         if return_aggregation:
             peak_map = peak_map.float()
             ctx.save_for_backward(input, peak_map)
