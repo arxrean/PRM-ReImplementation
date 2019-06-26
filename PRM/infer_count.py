@@ -159,14 +159,14 @@ def voc12_train_countset_cnt(args):
         aggregation, class_response_maps, valid_peak_list, peak_response_maps = model.forward(
             imgs)
 
+        res = np.zeros(20)
         if valid_peak_list is not None:
-	        res = np.zeros(20)
 	        for l in valid_peak_list:
 	            res[l[1]] += 1
-	        results.append(res)
-	        gt.append(cnt_labels)
+        results.append(res)
+        gt.append(cnt_labels)
 
-    with open('cnt.pkl', 'wb') as f:
+    with open('save/count_res/cnt.pkl', 'wb') as f:
         pickle.dump([results, gt], f)
 
 
