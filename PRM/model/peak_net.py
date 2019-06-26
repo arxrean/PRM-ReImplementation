@@ -185,7 +185,7 @@ class PeakResponseMapping(nn.Sequential):
                 instance_list, key=lambda x: x[0], reverse=True), nms_threshold, merge_peak_response)
         return [dict(category=v[1], mask=v[2], prm=v[3]) for v in instance_list]
 
-    def forward(self, input, class_threshold=0, peak_threshold=30, retrieval_cfg=None):
+    def forward(self, input, class_threshold=0, peak_threshold=40, retrieval_cfg=None): ##30
         assert input.dim() == 4, 'PeakResponseMapping layer only supports batch mode.'
         if self.inferencing:
             input.requires_grad_()
