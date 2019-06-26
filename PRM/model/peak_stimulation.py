@@ -3,6 +3,7 @@ import torch.nn.functional as F
 from torch.autograd import Function
 import pdb
 
+
 class PeakStimulation(Function):
 
     @staticmethod
@@ -15,13 +16,14 @@ class PeakStimulation(Function):
         padding = torch.nn.ConstantPad2d(offset, float('-inf'))
         padded_maps = padding(input)
         batch_size, num_channels, h, w = padded_maps.size()
-        element_map = torch.arange(0, h * w).long().view(1, 1, h, w)[:, :, offset: -offset, offset: -offset]
+        element_map = torch.arange(
+            0, h * w).long().view(1, 1, h, w)[:, :, offset: -offset, offset: -offset]
         element_map = element_map.to(input.device)
-        _, indices  = F.max_pool2d(
+        _, indices = F.max_pool2d(
             padded_maps,
-            kernel_size = win_size, 
-            stride = 1, 
-            return_indices = True)
+            kernel_size=win_size,
+            stride=1,
+            return_indices=True)
         peak_map = (indices == element_map)
 
         # peak filtering
@@ -30,12 +32,14 @@ class PeakStimulation(Function):
             peak_map = (peak_map & mask)
         peak_list = torch.nonzero(peak_map)
         ctx.mark_non_differentiable(peak_list)
-        
+
         # peak aggregation
         pdb.set_trace()
         if return_aggregation:
             peak_map = peak_map.float()
             ctx.save_for_backward(input, peak_map)
+            peak_map_expand = peak_map.expand_as(torch.randn(peak_map.size()[0], peak_map.size()[
+                                                 1], peak_map.size()[1], peak_map.size()[2], peak_map.size()[3]))
             return peak_list, (input * peak_map).view(batch_size, num_channels, -1).sum(2) / \
                 peak_map.view(batch_size, num_channels, -1).sum(2)
         else:
@@ -45,7 +49,8 @@ class PeakStimulation(Function):
     def backward(ctx, grad_peak_list, grad_output):
         input, peak_map, = ctx.saved_tensors
         batch_size, num_channels, _, _ = input.size()
-        grad_input = peak_map * grad_output.view(batch_size, num_channels, 1, 1)
+        grad_input = peak_map * \
+            grad_output.view(batch_size, num_channels, 1, 1)
         return (grad_input,) + (None,) * ctx.num_flags
 
 
