@@ -38,8 +38,8 @@ class PeakStimulation(Function):
         if return_aggregation:
             peak_map = peak_map.float()
             ctx.save_for_backward(input, peak_map)
-            peak_map_expand = peak_map.expand_as(torch.randn(peak_map.size()[0], peak_map.size()[
-                                                 1], peak_map.size()[1], peak_map.size()[2], peak_map.size()[3]))
+            peak_map_expand = peak_map.view(peak_map.size()[0], peak_map.size()[
+                                            1], 1, peak_map.size()[2], peak_map.size()[3])
             return peak_list, (input * peak_map).view(batch_size, num_channels, -1).sum(2) / \
                 peak_map.view(batch_size, num_channels, -1).sum(2)
         else:
