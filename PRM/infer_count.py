@@ -173,7 +173,7 @@ def voc12_train_countset_cnt(args):
 def evaluate(cnt_path):
 	file = pickle.load(open(cnt_path, 'rb'))
 	res = np.asarray(file[0])
-	label = np.asarray([f.squeeze().numpy() for f in file[1]])
+	label = np.asarray(file[1])
 
 	mse = np.mean((res[np.where(label != 0)]-label[np.where(label != 0)])**2)
 	print('mse:{}'.format(mse))
@@ -182,5 +182,5 @@ def evaluate(cnt_path):
 if __name__ == '__main__':
 	args = parse()
 	# voc12_train_count(args)
-	voc12_train_countset_cnt(args)
-	# evaluate('save/count_res/cnt.pkl')
+	# voc12_train_countset_cnt(args)
+	evaluate('save/count_res/cnt40.pkl')
