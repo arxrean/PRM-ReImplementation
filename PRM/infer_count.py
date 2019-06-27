@@ -182,5 +182,5 @@ def evaluate(cnt_path):
 if __name__ == '__main__':
 	args = parse()
 	# voc12_train_count(args)
-	voc12_train_countset_cnt(args)
-	# evaluate('save/count_res/cnt40.pkl')
+	# voc12_train_countset_cnt(args)
+	evaluate('save/count_res/cnt30.pkl')
