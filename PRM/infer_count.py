@@ -175,8 +175,8 @@ def evaluate(cnt_path):
 	res = np.asarray(file[0])
 	label = np.asarray(file[1])
 
-	mse = np.mean((res[np.where(label != 0)]-label[np.where(label != 0)])**2)
-	print('mse:{}'.format(mse))
+	eva = np.mean((res[np.where(label != 0)]==label[np.where(label != 0)])**2)
+	print('eva:{}'.format(eva))
 
 
 if __name__ == '__main__':
