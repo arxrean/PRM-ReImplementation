@@ -166,7 +166,7 @@ def voc12_train_countset_cnt(args):
 		results.append(res)
 		gt.append(cnt_labels.squeeze().numpy())
 
-	with open('save/count_res/cnt40.pkl', 'wb') as f:
+	with open('save/count_res/cnt50.pkl', 'wb') as f:
 		pickle.dump([results, gt], f)
 
 
@@ -182,5 +182,5 @@ def evaluate(cnt_path):
 if __name__ == '__main__':
 	args = parse()
 	# voc12_train_count(args)
-	# voc12_train_countset_cnt(args)
-	evaluate('save/count_res/cnt40.pkl')
+	voc12_train_countset_cnt(args)
+	# evaluate('save/count_res/cnt40.pkl')
