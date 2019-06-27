@@ -34,7 +34,6 @@ class PeakStimulation(Function):
         ctx.mark_non_differentiable(peak_list)
 
         # peak aggregation
-        pdb.set_trace()
         if return_aggregation:
             peak_map = peak_map.float()
             ctx.save_for_backward(input, peak_map)
