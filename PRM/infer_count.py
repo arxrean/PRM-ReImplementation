@@ -164,7 +164,7 @@ def voc12_train_countset_cnt(args):
 			for l in valid_peak_list:
 				res[l[1]] += 1
 		results.append(res)
-		gt.append(cnt_labels)
+		gt.append(cnt_labels.numpy())
 
 	with open('save/count_res/cnt.pkl', 'wb') as f:
 		pickle.dump([results, gt], f)
@@ -173,7 +173,7 @@ def voc12_train_countset_cnt(args):
 def evaluate(cnt_path):
 	file = pickle.load(open(cnt_path, 'rb'))
 	res = np.asarray(file[0])
-	label = np.asarray(file[1])
+	label = np.asarray(file[1].numpy())
 
 	mse = np.mean((res[np.where(label != 0)]-label[np.where(label != 0)])**2)
 	print('mse:{}'.format(mse))
