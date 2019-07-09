@@ -50,3 +50,8 @@ def voc12_train_countset_cnt(args):
         res_dict[np.sum(cnt_labels)] += 1
 
     print(res_dict, flush=True)
+
+
+if __name__ == '__main__':
+    args = parse()
+    voc12_train_countset_cnt(args)
