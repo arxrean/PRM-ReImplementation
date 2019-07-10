@@ -59,7 +59,7 @@ def voc12_train_countset_cnt(args):
         res_dict[int(np.sum(cnt_labels.numpy()))] += 1
 
     obj_num = sorted(list(res_dict.keys()))
-    plt.bar(range(len(obj_num)), [gradeGroup.get(xtick, 0) for xtick in obj_num], align='center',yerr=0.000001)
+    plt.bar(range(len(obj_num)), [res_dict.get(xtick, 0) for xtick in obj_num], align='center',yerr=0.000001)
     plt.xticks(range(len(obj_num)), xticks)
     plt.xlabel('obj num')
     plt.ylabel('sample num')
