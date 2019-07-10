@@ -19,6 +19,7 @@ def parse():
     parser.add_argument("--crop_size", default=448, type=int)
     # config
     parser.add_argument("--batch_size", default=16, type=int)
+    parser.add_argument("--cuda", default=False, type=bool)
 
     # save
     parser.add_argument("--save_weights", default='save/weights', type=str)
@@ -45,7 +46,9 @@ def voc12_train_countset_cnt(args):
 
     res_dict = dict()
     for iter, pack in enumerate(train_loader):
-        imgs = pack[0].cuda()
+        imgs = pack[0]
+        if args.cuda:
+            imgs = imgs.cuda()
         labels = pack[1][0]
         cnt_labels = pack[1][1]
 
