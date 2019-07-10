@@ -44,7 +44,7 @@ def voc12_train_countset_cnt(args):
                               num_workers=0, shuffle=False)
 
     res_dict = dict()
-    for iter, pack in enumerate(tqdm(train_loader)):
+    for iter, pack in enumerate(train_loader):
         imgs = pack[0].cuda()
         labels = pack[1][0]
         cnt_labels = pack[1][1]
