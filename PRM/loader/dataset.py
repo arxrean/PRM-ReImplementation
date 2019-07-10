@@ -51,6 +51,21 @@ class VOC_Classification(Dataset):
         self.classes = classes
         self.image_labels = self._read_annotations(self.split)
 
+        res_dict = {}
+        for label in self.image_labels:
+            cls_num = len(np.where(label[1] == 1))
+            if cls_num not in res_dict:
+                res_dict[cls_num] = 0
+            res_dict[cls_num] += 1
+
+        obj_num = sorted(list(res_dict.keys()))
+        plt.bar(range(len(obj_num)), [res_dict.get(xtick, 0) for xtick in obj_num], align='center',yerr=0.000001)
+        plt.xticks(range(len(obj_num)), obj_num)
+        plt.xlabel('obj num')
+        plt.ylabel('sample num')
+        plt.savefig('./save/imgs/statistic_voc2012_train.png')
+        exit(0)
+
     def _read_annotations(self, split):
         class_labels = OrderedDict()
         num_classes = len(self.classes)
