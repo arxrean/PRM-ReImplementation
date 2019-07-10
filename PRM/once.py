@@ -4,6 +4,7 @@ import argparse
 from torchvision import datasets, transforms
 from torch.utils.data import Dataset, DataLoader
 import numpy as np
+import matplotlib.pyplot as plt
 
 from loader.det_dataset import PascalVOCCount
 
@@ -53,14 +54,21 @@ def voc12_train_countset_cnt(args):
         labels = pack[1][0]
         cnt_labels = pack[1][1]
 
-        if int(np.sum(cnt_labels.numpy()))>10:
+        if int(np.sum(cnt_labels.numpy())) > 10:
             print(cnt_labels)
 
         if int(np.sum(cnt_labels.numpy())) not in res_dict:
             res_dict[int(np.sum(cnt_labels.numpy()))] = 0
         res_dict[int(np.sum(cnt_labels.numpy()))] += 1
 
-    print(res_dict)
+    obj_num = sorted(list(res_dict.keys()))
+    plt.bar(range(len(obj_num)), [gradeGroup.get(xtick, 0) for xtick in xticks], align='center',yerr=0.000001)
+    plt.xticks(range(len(obj_num)), xticks)
+    plt.xlabel('obj num')
+    plt.ylabel('sample num')
+    plt.savefig('./save/imgs/statistic_voc2012_with_bbox.png')
+
+
 
 
 if __name__ == '__main__':
