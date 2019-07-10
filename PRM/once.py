@@ -3,6 +3,7 @@ from nest import modules, run_tasks
 import argparse
 from torchvision import datasets, transforms
 from torch.utils.data import Dataset, DataLoader
+import numpy as np
 
 from loader.det_dataset import PascalVOCCount
 
