@@ -20,7 +20,7 @@ def parse():
     # parser.add_argument("--session_name", default="train_with_center_loss", type=str)
     # data
     parser.add_argument(
-        "--voc12_root", default='/u/zkou2/Data/VOCdevkit', type=str)
+        "--voc12_root", default='/mnt/lustre/jiangsu/dlar/home/zyk17/data/VOCdevkit', type=str)
     parser.add_argument("--crop_size", default=448, type=int)
     # config
     parser.add_argument("--num_workers", default=8, type=int)
