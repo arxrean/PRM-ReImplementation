@@ -54,7 +54,7 @@ def voc12_train_countset_cnt(args):
         cnt_labels = pack[1][1]
 
         if int(np.sum(cnt_labels.numpy()))>10:
-            pass
+            print(cnt_labels)
 
         if int(np.sum(cnt_labels.numpy())) not in res_dict:
             res_dict[int(np.sum(cnt_labels.numpy()))] = 0
