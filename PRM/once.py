@@ -60,7 +60,7 @@ def voc12_train_countset_cnt(args):
 
     obj_num = sorted(list(res_dict.keys()))
     plt.bar(range(len(obj_num)), [res_dict.get(xtick, 0) for xtick in obj_num], align='center',yerr=0.000001)
-    plt.xticks(range(len(obj_num)), xticks)
+    plt.xticks(range(len(obj_num)), obj_num)
     plt.xlabel('obj num')
     plt.ylabel('sample num')
     plt.savefig('./save/imgs/statistic_voc2012_with_bbox.png')
