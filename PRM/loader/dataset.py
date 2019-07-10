@@ -8,6 +8,7 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import datasets, transforms
 from PIL import Image
 import pdb
+import matplotlib.pyplot as plt
 
 
 def pascal_voc_object_categories(query: Optional[Union[int, str]] = None) -> Union[int, str, List[str]]:
