@@ -53,9 +53,9 @@ def voc12_train_countset_cnt(args):
         labels = pack[1][0]
         cnt_labels = pack[1][1]
 
-        if np.sum(cnt_labels) not in res_dict:
-            res_dict[np.sum(cnt_labels)] = 0
-        res_dict[np.sum(cnt_labels)] += 1
+        if int(np.sum(cnt_labels.numpy())) not in res_dict:
+            res_dict[int(np.sum(cnt_labels.numpy()))] = 0
+        res_dict[int(np.sum(cnt_labels.numpy()))] += 1
 
     print(res_dict)
 
