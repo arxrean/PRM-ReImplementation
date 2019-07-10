@@ -54,7 +54,7 @@ class VOC_Classification(Dataset):
 
         res_dict = {}
         for label in self.image_labels:
-            cls_num = len(np.where(label[1] == 1))
+            cls_num = len(np.where(label[1] == 1)[0])
             if cls_num not in res_dict:
                 res_dict[cls_num] = 0
             res_dict[cls_num] += 1
